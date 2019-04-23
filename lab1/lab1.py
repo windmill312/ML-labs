@@ -1,83 +1,109 @@
-# In[1]:
+from subprocess import check_output
+print(check_output(["ls", "data"]).decode("utf8"))
+
 import pandas as pd
 import numpy as np
-import random
 
-SEED = 1408
-random.seed(SEED)
-np.random.seed(SEED)
+data = pd.read_csv("data/bank.csv")
+print(data.groupby('Exited').size())
+print(data.head(6))
 
-train = pd.read_csv('data/google.csv')
+#Пустые значения
+print(data.isnull().sum())
 
-print('Train shape:', train.shape)
+data['Exited'].unique()
 
-train.info()
+#Размерность таблицы
+print(data.shape)
 
-train.head()
+#Замена строковых типов числовым
+from sklearn.preprocessing import LabelEncoder
 
-train.corr()
+labelencoder = LabelEncoder()
+for col in data.columns:
+    data[col] = labelencoder.fit_transform(data[col])
+
+print(data.head())
+
+#Проверка замены типов
+print(data['Geography'].unique())
+
+#??
+X = data.iloc[:,1:]
+y = data.iloc[:,13]
+print(X.head())
+print(y.head())
+
+print(X.describe())
+
+print(data.corr())
+print("-----------------------------------")
+print("Логистическая регрессия")
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.2,random_state=4)
 
 from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn import metrics
+
+model_LR = LogisticRegression()
+
+model_LR.fit(X_train,y_train)
+
+y_prob = model_LR.predict_proba(X_test)[:,1] # This will give you positive class prediction probabilities
+y_pred = np.where(y_prob > 0.5, 1, 0) # This will threshold the probabilities to give class predictions.
+
+confusion_matrix = metrics.confusion_matrix(y_test,y_pred)
+print("Confusion matrix:")
+print(confusion_matrix)
+
+auc_roc = metrics.roc_auc_score(y_test,y_pred)
+print("ROC_AUC:")
+print(auc_roc)
+
+LR_ridge = LogisticRegression()
+LR_ridge.fit(X_train,y_train)
+
+rep = metrics.classification_report(y_test,y_pred)
+print(rep)
+print("-----------------------------------")
+print("Случайный лес")
 from sklearn.ensemble import RandomForestClassifier
 
-from sklearn.metrics import classification_report, confusion_matrix
-from sklearn.model_selection import train_test_split, cross_val_score
+model_RR=RandomForestClassifier()
 
+model_RR.fit(X_train,y_train)
+#%%
+y_prob = model_RR.predict_proba(X_test)[:,1] # This will give you positive class prediction probabilities
+y_pred = np.where(y_prob > 0.5, 1, 0) # This will threshold the probabilities to give class predictions.
 
-y = train['Rating']
-X = train.drop('Rating', axis=1)
+confusion_matrix=metrics.confusion_matrix(y_test,y_pred)
+print("Confusion matrix:")
+print(confusion_matrix)
 
-print(X.shape, y.shape)
+auc_roc=metrics.roc_auc_score(y_test,y_pred)
+print("ROC_AUC:")
+print(auc_roc)
 
-# In[11]:
-X_train, X_valid, y_train, y_valid = train_test_split(X, y,
-                                                      test_size=0.3,
-                                                      random_state=8)
-# In[12]:
-print(X_train.shape, X_valid.shape, y_train, y_valid)
-
-from sklearn.tree import DecisionTreeClassifier
-first_tree = DecisionTreeClassifier(random_state=8)
-np.mean(cross_val_score(first_tree, X_train, y_train, cv=5))
-
+rep=metrics.classification_report(y_test,y_pred)
+print(rep)
+print("-----------------------------------")
+print("К-случайных соседей")
 from sklearn.neighbors import KNeighborsClassifier
-first_knn = KNeighborsClassifier()
-np.mean(cross_val_score(first_knn, X_train, y_train, cv=5))
 
-# clf = LogisticRegression(max_iter=100, solver='lbfgs', n_jobs=-1, multi_class='auto')
-# clf.fit(X, y)
-# print('Confusion matrix:', confusion_matrix(y, clf.predict(X)))
-# print('Classification report for test data:')
-# print(classification_report(y, clf.predict(X)))
-#
-#
-#
-#
-# # In[11]:
-#
-#
-# coefficients = pd.concat([pd.DataFrame(X.columns),pd.DataFrame(np.transpose(clf.coef_))], axis = 1)
-# coefficients.columns = ['feature', 'Rating1', 'Rating2', 'Rating3']
-# print(coefficients)
-#
-#
-# # In[12]:
-#
-#
-# clf = KNeighborsClassifier(n_jobs=-1)
-# clf.fit(X, y)
-# print('Confusion matrix:', confusion_matrix(y, clf.predict(X)))
-# print('Classification report for test data:')
-# print(classification_report(y, clf.predict(X)))
-#
-#
-# # In[13]:
-#
-#
-# clf = RandomForestClassifier(n_estimators=100, n_jobs=-1)
-# clf.fit(X, y)
-# print('Confusion matrix:', confusion_matrix(y, clf.predict(X)))
-# print('Classification report for test data:')
-# print(classification_report(y, clf.predict(X)))
+model_KN=KNeighborsClassifier()
+
+model_KN.fit(X_train, y_train)
+
+y_prob = model_RR.predict_proba(X_test)[:,1] # This will give you positive class prediction probabilities
+y_pred = np.where(y_prob > 0.5, 1, 0) # This will threshold the probabilities to give class predictions.
+
+confusion_matrix=metrics.confusion_matrix(y_test,y_pred)
+print("Confusion matrix:")
+print(confusion_matrix)
+
+rep=metrics.classification_report(y_test,y_pred)
+print(rep)
+
+auc_roc=metrics.roc_auc_score(y_test,y_pred)
+print("ROC_AUC:")
+print(auc_roc)
