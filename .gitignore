@@ -2,4 +2,6 @@
 */venv
 */.idea
 *.DS_Store
-*./.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+*.png
+*.ipynb_checkpoints/

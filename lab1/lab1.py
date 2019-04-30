@@ -28,7 +28,6 @@ print(data.head())
 #Проверка замены типов
 print(data['Geography'].unique())
 
-#??
 X = data.iloc[:,1:]
 y = data.iloc[:,13]
 print(X.head())
@@ -72,7 +71,7 @@ from sklearn.ensemble import RandomForestClassifier
 model_RR=RandomForestClassifier()
 
 model_RR.fit(X_train,y_train)
-#%%
+
 y_prob = model_RR.predict_proba(X_test)[:,1] # This will give you positive class prediction probabilities
 y_pred = np.where(y_prob > 0.5, 1, 0) # This will threshold the probabilities to give class predictions.
 
