@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="79bb6c71-a3be-4e62-ab9c-d30a2e34010c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab1/lab1.py" beforeDir="false" afterPath="$PROJECT_DIR$/lab1/lab1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab1/lab1.py.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab1/packager.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab2/lab2.py" beforeDir="false" afterPath="$PROJECT_DIR$/lab2/lab2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab2/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/lab2/test.py" afterDir="false" />
-    </list>
+    <list default="true" id="79bb6c71-a3be-4e62-ab9c-d30a2e34010c" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,9 +50,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="900" />
+    <option name="height" value="824" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -166,7 +159,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="824" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24242425" />
